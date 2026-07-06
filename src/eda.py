@@ -1,13 +1,23 @@
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from pathlib import Path
 
 # loading the dataset
-raw_df = pd.read_csv(Path)
+def load_dataset(path):
+    return pd.read_csv(path)
+
+# fixing the dtypes
+def fix_dtypes(df):
+    for col in df.select_dtypes(include="object").columns:
+        converted = pd.to_numeric(df[col], "coerce")
+        if converted.notna().sum() / len(df) > 0.9:
+            df[col] = converted
+    return df
 
 def clean_missing(raw_df):
     df = raw_df.copy()
+    df = fix_dtypes(df)
+    
     numerical_col = raw_df.select_dtypes(include="number").columns.to_list()
     categorical_col = raw_df.select_dtypes(exclude="number").columns.to_list()
 
