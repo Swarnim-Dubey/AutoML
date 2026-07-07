@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from pathlib import Path
+from utils import get_columns_type
 
 # loading the dataset
 def load_dataset(path):
@@ -17,9 +18,7 @@ def fix_dtypes(df):
 def clean_missing(raw_df):
     df = raw_df.copy()
     df = fix_dtypes(df)
-    
-    numerical_col = raw_df.select_dtypes(include="number").columns.to_list()
-    categorical_col = raw_df.select_dtypes(exclude="number").columns.to_list()
+    numerical_col, categorical_col = get_columns_type(df)
 
     # numerical loop
     for col in numerical_col:
