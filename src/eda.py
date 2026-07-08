@@ -1,7 +1,10 @@
 import numpy as np
 import pandas as pd
 from pathlib import Path
-from utils import get_columns_type
+try:
+    from src.utils import get_columns_type
+except ImportError:
+    from utils import get_columns_type
 
 # loading the dataset
 def load_dataset(path):

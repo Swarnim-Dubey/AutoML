@@ -6,7 +6,10 @@ from sklearn.linear_model import LogisticRegression, LinearRegression
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from xgboost import XGBClassifier, XGBRegressor
 import joblib
-from utils import get_columns_type
+try:
+    from src.utils import get_columns_type
+except ImportError:
+    from utils import get_columns_type
 
 # defining the models that are going to be used in the pipeline
 models = {

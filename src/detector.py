@@ -1,6 +1,9 @@
 import numpy as np
 import pandas as pd
-from utils import get_columns_type
+try:
+    from src.utils import get_columns_type
+except ImportError:
+    from utils import get_columns_type
 from sklearn.preprocessing import LabelEncoder
 
 # preparing 'y'
