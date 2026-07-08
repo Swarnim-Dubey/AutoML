@@ -1,6 +1,13 @@
 import numpy as np
 import pandas as pd
 from utils import get_columns_type
+from sklearn.preprocessing import LabelEncoder
+
+# preparing 'y'
+def encode_target(y):
+    encoder = LabelEncoder()
+    y_encoded = encoder.fit_transform(y)
+    return y_encoded, encoder
 
 def split_features_target(df):
     X = df.iloc[:, :-1]
