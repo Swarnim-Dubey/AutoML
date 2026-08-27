@@ -69,7 +69,7 @@ def select_best_model(X, y, problem_type):
     best_model_name = max(results, key=results.get)
     best_pipeline = pipelines[best_model_name]
     best_pipeline.fit(X, y)
-    return best_model_name, best_pipeline
+    return best_model_name, best_pipeline, results
 
 def save_artifact(artifact, path):
     joblib.dump(artifact, path)
