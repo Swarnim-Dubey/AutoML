@@ -6,19 +6,22 @@ from src.eda import clean_missing
 from src.pipeline import select_best_model, save_artifact
 
 st.title("AutoML")
-st.write("This is a automated ML model that can used on the Raw Dataset")
+st.write("This is an automated ML model that can be used on a raw dataset")
 tab1, tab2 = st.tabs(["Train", "Predict"])
+
 with tab1:
     file = st.file_uploader("Upload CSV file", type=["csv"])
-
+    
     if file is not None:
+        df_preview = pd.read_csv(file)
+        target_col = st.selectbox("Select the target column", df_preview.columns)
+
         if st.button("Train Model"):
-            df = pd.read_csv(file)
-            df = clean_missing(df)
+            df = clean_missing(df_preview)
             id_cols = detect_id_columns(df)
             df = drop_id_columns(df, id_cols)
 
-            X, y = split_features_target(df)
+            X, y = split_features_target(df, target_col=target_col)
 
             problem_type = detect_problem_type(y)
             encoder = None
@@ -29,7 +32,7 @@ with tab1:
             for col in cat_col:
                 cat_values[col] = X[col].unique().tolist()
 
-            best_model_name, best_pipeline = select_best_model(X, y, problem_type)
+            best_model_name, best_pipeline, results = select_best_model(X, y, problem_type)
 
             artifact = {
                 "pipeline": best_pipeline,
@@ -41,6 +44,7 @@ with tab1:
             }
             save_artifact(artifact, "models/best_model.pkl")
             st.success(f"Training complete. Best model: {best_model_name}")
+            st.bar_chart(results)
 
 with tab2:
     artifact = joblib.load("models/best_model.pkl")
