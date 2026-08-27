@@ -12,9 +12,12 @@ def encode_target(y):
     y_encoded = encoder.fit_transform(y)
     return y_encoded, encoder
 
-def split_features_target(df):
-    X = df.iloc[:, :-1]
-    y = df.iloc[:, -1]
+# letting the user to choose the target column
+# target_col = st.selectbox("Select the target column", df.columns)
+
+def split_features_target(df, target_col):
+    y = df[target_col]
+    X = df.drop(columns=[target_col])
     return X, y
 
 def detect_problem_type(y):
