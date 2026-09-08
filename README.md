@@ -47,10 +47,6 @@ Provides a simple interface to:
 - **scikit-learn** (`ColumnTransformer`, pipelines, models)
 - **Streamlit** for the UI
 
-## Status
-
-🚧 **Work in progress.** Core architecture is scoped out.
-
 ## Getting Started
 
 ```bash
